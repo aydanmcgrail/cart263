@@ -1,11 +1,33 @@
 "use strict";
 
-const counter = 10;
+let counter = 0;
+let ellipseAlpha = 255;
 
-let square1Size = 100;
-let fillBase = [20, 20, 200];
-let fillNoOverlap = [20, 20, 200];
-let fillOverlap = [100, 230, 170];
+let square1 = {
+    x: 75,
+    y: 75,
+    size: 100,
+}
+
+let square2 = {
+    x: 200,
+    y: 75,
+    size: 100,
+}
+let fillBase1 = [20, 20, 255];
+let fillNoOverlap1 = [20, 20, 255];
+let fillOverlap1 = [150, 150, 255];
+
+let fillBase2 = [255, 0, 0];
+let fillNoOverlap2 = [255, 0, 0];
+let fillOverlap2 = [255, 150, 150];
+
+
+let circle = {
+    x: 600,
+    y: 400,
+    radius: 50,
+}
 
 function setup() {
     console.log("go")
@@ -16,32 +38,77 @@ function setup() {
 function draw() {
     background("yellow");
 
-    //noStroke();
+    displayCircle();
+
     displaySquare();
 
-    /**
-        for (let i = counter; i >= 1; i--) {
-    
-        } */
+    push();
+    fill("red");
+    textSize(20);
+    text(counter, 20, 40);
+    pop();
+}
+
+function displayCircle() {
+    push();
+    fill(80, 200, 190, ellipseAlpha);
+    strokeWeight(3);
+    ellipse(circle.x, circle.y, circle.radius);
+    while (counter >= 1 || counter <= 10) {
+        ellipse(circle.x, circle.y, circle.radius);
+        circle.radius += circle.radius;
+
+    }
+    pop();
 }
 
 function displaySquare() {
     push();
-    fill(fillBase);
-    rect(75, 75, square1Size);
+    fill(fillBase1);
+    rect(square1.x, square1.y, square1.size);
+    fill(fillBase2);
+    rect(square2.x, square2.y, square2.size);
     pop();
 
     const overlapSquare1 =
-        mouseX > 75 &&
-        mouseX < 75 + square1Size &&
-        mouseY > 75 &&
-        mouseY < 75 + square1Size;
+        mouseX > square1.x &&
+        mouseX < square1.x + square1.size &&
+        mouseY > square1.y &&
+        mouseY < square1.y + square1.size;
+
+    const overlapSquare2 =
+        mouseX > square2.x &&
+        mouseX < square2.x + square2.size &&
+        mouseY > square2.y &&
+        mouseY < square2.y + square2.size;
 
     if (overlapSquare1) {
-        fillBase = fillOverlap;
-        console.log("contact");
+        fillBase1 = fillOverlap1;
+        square1.size = 105;
     } else {
-        fillBase = fillNoOverlap;
-        square1Size = 100;
+        fillBase1 = fillNoOverlap1;
+        square1.size = 100;
+    }
+
+    if (overlapSquare2) {
+        fillBase2 = fillOverlap2;
+        square2.size = 105;
+    } else {
+        fillBase2 = fillNoOverlap2;
+        square2.size = 100;
+    }
+}
+
+function mousePressed() {
+    const overlapSquare1 =
+        mouseX > square1.x &&
+        mouseX < square1.x + square1.size &&
+        mouseY > square1.y &&
+        mouseY < square1.y + square1.size;
+    if (overlapSquare1) {
+        counter += 1;
+    }
+    if (counter >= 11) {
+        counter = 0
     }
 }
