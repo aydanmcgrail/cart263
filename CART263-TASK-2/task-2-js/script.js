@@ -77,8 +77,10 @@ function setup() {
   console.log(document.getElementsByClassName("content-container"));
   console.log(document.getElementsByClassName("content-container").length);
   console.log(document.getElementsByClassName("content-container")[1]);
-  document.getElementsByClassName("content-container")[0].style.background = "rgb(214, 147, 84)";
-  document.getElementsByClassName("content-container")[1].style.background = "rgb(158, 54, 176)";
+  document.getElementsByClassName("content-container")[0].style.background =
+    "rgb(214, 147, 84)";
+  document.getElementsByClassName("content-container")[1].style.background =
+    "rgb(158, 54, 176)";
 
   /*************************************** */
   /* 3: Change the src element of the first image element on the page to be ...
@@ -101,7 +103,8 @@ add to the existing content an h2 element containing the text `TEST 123`
   /* 6: Select the fifth paragraph element on the page and add to the existing content
 an img element that holds `one.png`, and add the class newStyle to said paragraph element.
 /***CODE */
-  document.querySelectorAll("p")[4].innerHTML += "<img src= 'task-2-images/one.png' class= 'newStyle'></img>";
+  document.querySelectorAll("p")[4].innerHTML +=
+    "<img src= 'task-2-images/one.png' class= 'newStyle'></img>";
 
   /*************************************** */
   /* 7: Add the following array variable: let colors = ['red','blue','green','orange'];, 
@@ -111,12 +114,25 @@ assign the element from innerContainers variable with the same index
 (i.e. colors[0] should be allocated to the first innerContainers element, colors[1] to the second, etc ...) 
 a background using that color.
 /***CODE */
-  let colors = ['red', 'blue', 'green', 'orange'];
-  let innerContainers = document.getElementsByClassName("inner-container");
+  console.log(document.querySelectorAll(".inner-container"));
+  console.log(document.querySelectorAll(".content-container").length);
+  console.log(document.querySelectorAll(".content-container")[1]);
+
+  let colors = [
+    "red",
+    "blue",
+    "green",
+    "orange",
+    "black",
+    "purple",
+    "yellow",
+    "pink",
+  ];
+  let innerContainers = document.querySelectorAll(".inner-container");
 
   for (let i = 0; i < colors.length; i++) {
     if (innerContainers[i]) {
-      innerContainers[i].styles.backgroundColor = colors[i];
+      innerContainers[i].style.backgroundColor = colors[i];
     }
   }
   /*************************************** */
@@ -174,6 +190,28 @@ passing the current allPTagsThree element as the parent with each iteration.*/
 
   /***CODE */
 
+  function customNewBoxCreate(parent) {
+    let newDiv = document.createElement("div");
+    newDiv.className = "testDiv";
+    parent.appendChild(newDiv);
+    return newDiv;
+  }
+
+  for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
+      let returnedDiv = customNewBoxCreate(document.getElementById("new-grid"));
+      returnedDiv.style.left = col * 40 + "px";
+      returnedDiv.style.top = row * 40 + "px";
+      if (row % 2 === 0) {
+        returnedDiv.style.backgroundColor = "white";
+        returnedDiv.textContent = "EVEN";
+      } else {
+        returnedDiv.style.backgroundColor = "purple";
+        returnedDiv.textContent = "ODD";
+      }
+    }
+  }
+
   /***EXPLANATION::
    *
    *
@@ -194,6 +232,33 @@ passing the current allPTagsThree element as the parent with each iteration.*/
     when dividing by three. */
 
   /***CODE */
+
+  for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
+      let returnedDiv = customNewBoxCreate(
+        document.getElementById("new-grid-three"),
+      );
+      returnedDiv.style.left = col * 40 + "px";
+      returnedDiv.style.top = row * 40 + "px";
+      if (row % 3 === 0) {
+        returnedDiv.style.backgroundColor = "green";
+      } else {
+        returnedDiv.style.backgroundColor = "white";
+      }
+      if (col % 3 === 0) {
+        returnedDiv.textContent = "ONE";
+        returnedDiv.style.backgroundColor = "red";
+      } else if (col % 3 === 1) {
+        //returnedDiv.style.backgroundColor = "purple";
+        returnedDiv.textContent = "TWO";
+        returnedDiv.style.backgroundColor = "orange";
+      } else if (col % 3 === 0) {
+        //returnedDiv.style.backgroundColor = "purple";
+        returnedDiv.textContent = "THREE";
+        returnedDiv.style.backgroundColor = "yellow";
+      }
+    }
+  }
 
   /***EXPLANATION::
    *
