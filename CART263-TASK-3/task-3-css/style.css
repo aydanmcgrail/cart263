@@ -107,12 +107,21 @@ h5 {
   position: absolute;
   color: white;
   margin: 1px;
-  padding: 12px;
+  padding: 10px 12px;
+  top: 10px;
+  left: 10px;
+  font-size: 14px;
 }
 
 .TEAM_A_box:hover {
   background-color: rgb(30, 168, 223);
   cursor: pointer;
+}
+
+.TEAM_A_ball {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgb(246, 15, 142);
 }
 
 .TEAM_A_circle {
