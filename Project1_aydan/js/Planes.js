@@ -1,8 +1,13 @@
+// utility
+function randomRange(min, max) {
+  return min + Math.random() * (max - min);
+}
+
 planeImages = [
-  "images/plane1.png",
-  "images/plane2.png",
-  "images/plane3.png",
-  "images/plane4.png",
+  "../images/plane1.png",
+  "../images/plane2.png",
+  "../images/plane3.png",
+  "../images/plane4.png",
 ];
 
 function getRandomPlane() {
@@ -18,7 +23,13 @@ class Plane {
     this.width = width;
     this.height = height;
 
-    this.vx = Math.random() * 3 + 1;
+    // collision box: smaller, focused on plane body
+    this.collisionWidth = width * 0.7; // 70% of width
+    this.collisionHeight = height * 0.5; // 50% of height
+    this.collisionOffsetX = (width - this.collisionWidth) / 2; // centre horizontally
+    this.collisionOffsetY = (height - this.collisionHeight) / 2; // centre vertically
+
+    this.vx = Math.random() * 13 + 2;
 
     this.hoverOffset = Math.random() * 1000;
 
@@ -54,7 +65,7 @@ class Plane {
   // Wrap the planes if they reach the left side
   wrap() {
     if (this.x < -this.width) {
-      this.x = window.innerWidth + 100;
+      this.x = 1920 + 100;
 
       //this makes sure the plane is visible and alive
       // when it comes back on the left, destroyed or not
