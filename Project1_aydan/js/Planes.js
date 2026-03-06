@@ -1,0 +1,83 @@
+planeImages = [
+  "images/plane1.png",
+  "images/plane2.png",
+  "images/plane3.png",
+  "images/plane4.png",
+];
+
+function getRandomPlane() {
+  return planeImages[Math.floor(Math.random() * planeImages.length)];
+}
+
+class Plane {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.baseY = randomRange(100, 400);
+    this.y = y;
+
+    this.width = width;
+    this.height = height;
+
+    this.vx = Math.random() * 3 + 1;
+
+    this.hoverOffset = Math.random() * 1000;
+
+    this.alive = true;
+
+    this.planeBody = document.createElement("div");
+
+    this.renderPlane();
+  }
+
+  move(time) {
+    //horizontal move
+    this.x -= this.vx;
+
+    //up and down motion
+    this.y = this.baseY + Math.sin(time * 0.05 + this.hoverOffset) * 10;
+
+    //update the actual div...
+    this.planeBody.style.left = this.x + "px";
+    this.planeBody.style.top = this.y + "px";
+  }
+
+  explode() {
+    if (!this.alive) return;
+
+    this.alive = false;
+
+    this.planeBody.style.visibility = "hidden";
+
+    createExplosion(this.x, this.y);
+  }
+
+  // Wrap the planes if they reach the left side
+  wrap() {
+    if (this.x < -this.width) {
+      this.x = window.innerWidth + 100;
+
+      //this makes sure the plane is visible and alive
+      // when it comes back on the left, destroyed or not
+      this.alive = true;
+      this.planeBody.style.visibility = "visible";
+
+      // new random plane image
+      this.planeBody.style.backgroundImage = `url(${getRandomPlane()})`;
+    }
+  }
+
+  // Display the planes
+  renderPlane() {
+    this.planeBody.classList.add("plane");
+
+    this.planeBody.style.width = this.width + "px";
+    this.planeBody.style.height = this.height + "px";
+
+    this.planeBody.style.left = this.x + "px";
+    this.planeBody.style.top = this.y + "px";
+
+    this.planeBody.style.backgroundImage = `url(${getRandomPlane()})`;
+    this.planeBody.style.backgroundSize = "contain";
+    this.planeBody.style.backgroundRepeat = "no-repeat";
+  }
+}

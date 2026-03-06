@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #80baea;
+  display: flex;
+  min-height: 60px;
+  text-transform: uppercase;
+  justify-content: space-between;
+}
+
+.hand {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+}
+
+.plane {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.fork {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  background-color: white;
+}
+
+.coin {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+}
+
+.coins {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+}
