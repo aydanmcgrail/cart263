@@ -119,9 +119,79 @@ window.onload = function () {
         }
       }
     }
+
+    // DEBUG: Draw collision boxes
+    drawCollisionDebug(sky);
+
     if (sky.hand) sky.hand.update();
 
     requestAnimationFrame(updateSky);
+  }
+
+  function drawCollisionDebug(sky) {
+    // Remove old debug boxes
+    document
+      .querySelectorAll("[data-debug-box]")
+      .forEach((box) => box.remove());
+
+    // Draw fork collision boxes (red)
+    sky.forks.forEach((f) => {
+      const box = document.createElement("div");
+      box.setAttribute("data-debug-box", "fork");
+      box.style.position = "absolute";
+      box.style.left = f.x + f.collisionOffsetX + "px";
+      box.style.top = f.y + f.collisionOffsetY + "px";
+      box.style.width = f.collisionWidth + "px";
+      box.style.height = f.collisionHeight + "px";
+      box.style.border = "2px solid red";
+      box.style.backgroundColor = "rgba(255, 0, 0, 0.2)";
+      box.style.pointerEvents = "none";
+      document.body.appendChild(box);
+    });
+
+    // Draw plane collision boxes (blue for coin, purple for fork)
+    sky.planes.forEach((p) => {
+      // Coin collision box (blue)
+      const coinBox = document.createElement("div");
+      coinBox.setAttribute("data-debug-box", "plane-coin");
+      coinBox.style.position = "absolute";
+      coinBox.style.left = p.x + p.collisionOffsetX + "px";
+      coinBox.style.top = p.y + p.collisionOffsetY + "px";
+      coinBox.style.width = p.collisionWidth + "px";
+      coinBox.style.height = p.collisionHeight + "px";
+      coinBox.style.border = "2px solid blue";
+      coinBox.style.backgroundColor = "rgba(0, 0, 255, 0.2)";
+      coinBox.style.pointerEvents = "none";
+      document.body.appendChild(coinBox);
+
+      // Fork collision box (purple)
+      const forkBox = document.createElement("div");
+      forkBox.setAttribute("data-debug-box", "plane-fork");
+      forkBox.style.position = "absolute";
+      forkBox.style.left = p.x + p.forkCollisionOffsetX + "px";
+      forkBox.style.top = p.y + p.forkCollisionOffsetY + "px";
+      forkBox.style.width = p.forkCollisionWidth + "px";
+      forkBox.style.height = p.forkCollisionHeight + "px";
+      forkBox.style.border = "2px solid purple";
+      forkBox.style.backgroundColor = "rgba(128, 0, 128, 0.2)";
+      forkBox.style.pointerEvents = "none";
+      document.body.appendChild(forkBox);
+    });
+
+    // Draw hand fist collision box (orange)
+    if (sky.hand) {
+      const handBox = document.createElement("div");
+      handBox.setAttribute("data-debug-box", "hand");
+      handBox.style.position = "absolute";
+      handBox.style.left = sky.hand.x + sky.hand.fistOffsetX + "px";
+      handBox.style.top = sky.hand.y + sky.hand.fistOffsetY + "px";
+      handBox.style.width = sky.hand.fistWidth + "px";
+      handBox.style.height = sky.hand.fistHeight + "px";
+      handBox.style.border = "2px solid orange";
+      handBox.style.backgroundColor = "rgba(255, 165, 0, 0.2)";
+      handBox.style.pointerEvents = "none";
+      document.body.appendChild(handBox);
+    }
   }
 
   // hand sits at the top and follows the mouse
@@ -136,6 +206,31 @@ window.onload = function () {
   window.addEventListener("click", function () {
     if (sky.hand) {
       sky.hand.close(); // show closed hand briefly on click
+
+      // create collision box for hand fist
+      const handFistBox = {
+        x: sky.hand.x + sky.hand.fistOffsetX,
+        y: sky.hand.y + sky.hand.fistOffsetY,
+        width: sky.hand.fistWidth,
+        height: sky.hand.fistHeight,
+      };
+
+      // check collision with planes (iterate forwards for predictable detection)
+      for (let i = 0; i < sky.planes.length; i++) {
+        const p = sky.planes[i];
+        // use the tighter fork collision box for hand-plane interactions
+        const planeCollisionBox = {
+          x: p.x + p.forkCollisionOffsetX,
+          y: p.y + p.forkCollisionOffsetY,
+          width: p.forkCollisionWidth,
+          height: p.forkCollisionHeight,
+        };
+        if (p.alive && rectsIntersect(handFistBox, planeCollisionBox)) {
+          createExplosion(p.x, p.y); // show explosion at plane location
+          p.explode(); // make plane invisible
+          break; // only destroy one plane per click
+        }
+      }
     }
   });
 

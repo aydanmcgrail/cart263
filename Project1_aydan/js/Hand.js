@@ -15,6 +15,12 @@ class Hand {
     // intense delay: start low, e.g. 0.02; increase to 0.1+ for less delay
     this.lerpSpeed = 0.02;
 
+    // collision box for the closed fist (tip of the hand)
+    this.fistWidth = width * 0.35; // 35% of hand width
+    this.fistHeight = height * 0.25; // 25% of hand height (just the fist)
+    this.fistOffsetX = (width - this.fistWidth) / 2; // centre horizontally
+    this.fistOffsetY = 0; // fist at top of hand
+
     this.handBody = document.createElement("div");
     this.render();
   }
