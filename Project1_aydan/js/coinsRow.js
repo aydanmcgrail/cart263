@@ -20,8 +20,6 @@ class CoinsRow {
     this.rowBody.style.top = this.y + "px";
     this.rowBody.style.width = this.width + "px";
     this.rowBody.style.height = this.height + "px";
-    // make sure the correct image is applied even if CSS fails
-    this.rowBody.style.backgroundImage = "url('../images/coins.png')";
   }
 }
 
@@ -30,4 +28,3 @@ window.addEventListener("load", () => {
   const banner = new CoinsRow();
   document.body.appendChild(banner.rowBody);
 });
-

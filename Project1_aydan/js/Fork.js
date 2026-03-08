@@ -9,9 +9,9 @@ class Fork {
     this.height = height;
 
     // collision area: only the very tip of the fork teeth, tighter offset
-    this.collisionWidth = width * 0.3; // 30% of width centered
-    this.collisionHeight = height * 0.12; // top 12% of height for just teeth tips
-    this.collisionOffsetX = (width - this.collisionWidth) / 2; // centre horizontally
+    this.collisionWidth = width * 0.1; // 10% of width centered
+    this.collisionHeight = height * 0.18; // top 12% of height for just teeth tips
+    this.collisionOffsetX = (width - this.collisionWidth) / 30; // centre horizontally
     this.collisionOffsetY = 0; // teeth start at top
 
     this.vy = 0;
@@ -27,13 +27,13 @@ class Fork {
     console.log("goUp");
     if (!this.goUp) {
       this.goUp = true;
-      this.vy = -30;
+      this.vy = -60;
     }
   }
 
   goDown() {
     if (this.goUp) {
-      this.vy += 1; //speed of drop
+      this.vy += 3.5; //speed of drop
       this.y += this.vy;
 
       if (this.y >= this.baseY) {
@@ -56,17 +56,6 @@ class Fork {
     this.forkBody.style.left = this.x + "px";
     this.forkBody.style.top = this.y + "px";
   }
-
-  /*touchPlane(plane) {
-    let planeEl = bird.animalBody.getBoundingClientRect();
-    //let forkBody = this.animalBody.getBoundingClientRect();
-    let d = distance(birdEl.x, birdEl.y, dogBody.x, dogBody.y);
-    if (d < 50) {
-      console.log("collision");
-      console.log(bird.animalBody.style.background);
-      bird.animalBody.style.background = `orange`;
-    }
-  }*/
 
   // Display the planes
   renderFork() {

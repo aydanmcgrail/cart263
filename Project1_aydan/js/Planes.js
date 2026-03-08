@@ -3,11 +3,18 @@ function randomRange(min, max) {
   return min + Math.random() * (max - min);
 }
 
+////there a 4 different type of planes
+
 planeImages = [
   "../images/plane1.png",
   "../images/plane2.png",
   "../images/plane3.png",
   "../images/plane4.png",
+  "../images/plane5.png",
+  "../images/plane6.png",
+  "../images/plane7.png",
+  "../images/plane8.png",
+  "../images/plane9.png",
 ];
 
 function getRandomPlane() {

@@ -16,10 +16,10 @@ class Hand {
     this.lerpSpeed = 0.02;
 
     // collision box for the closed fist (tip of the hand)
-    this.fistWidth = width * 0.35; // 35% of hand width
-    this.fistHeight = height * 0.25; // 25% of hand height (just the fist)
-    this.fistOffsetX = (width - this.fistWidth) / 2; // centre horizontally
-    this.fistOffsetY = 0; // fist at top of hand
+    this.fistWidth = width * 0.3; // 35% of hand width
+    this.fistHeight = height * 0.2; // 95% of hand height (just the fist)
+    this.fistOffsetX = (width - this.fistWidth) / 12; // centre horizontally
+    this.fistOffsetY = (height - this.fistHeight) / 1.05; // fist at top of hand
 
     this.handBody = document.createElement("div");
     this.render();
@@ -37,15 +37,14 @@ class Hand {
     this.handBody.style.top = this.y + "px";
   }
 
-  //centre the hand horizontally on the provided clientX coordinate
+  //hand follows mouseX
   setX(clientX) {
     let target = clientX - this.width / 4;
     target = Math.max(0, Math.min(target, 2200 - this.width));
     this.targetX = target;
-    // no update() call here; let the animation loop handle it
   }
 
-  //move the hand in depth/vertical space based on mouse Y.
+  //hand follows mouseY
   //the hand will never drop lower than half the viewport height.
   setY(clientY) {
     // position hand so mouse sits roughly in its centre
@@ -58,9 +57,7 @@ class Hand {
     // no update() call here; let the animation loop handle it
   }
 
-  /**
-   * briefly show the closed hand image on click
-   */
+  //briefly show the closed hand image on click
   close() {
     this.handBody.style.backgroundImage = "url('../images/mainClosed.png')";
     setTimeout(() => {

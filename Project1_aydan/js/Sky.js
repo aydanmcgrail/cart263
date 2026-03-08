@@ -218,12 +218,12 @@ window.onload = function () {
       // check collision with planes (iterate forwards for predictable detection)
       for (let i = 0; i < sky.planes.length; i++) {
         const p = sky.planes[i];
-        // use the tighter fork collision box for hand-plane interactions
+        // use the plane's collision box for hand-plane interactions
         const planeCollisionBox = {
-          x: p.x + p.forkCollisionOffsetX,
-          y: p.y + p.forkCollisionOffsetY,
-          width: p.forkCollisionWidth,
-          height: p.forkCollisionHeight,
+          x: p.x + p.collisionOffsetX,
+          y: p.y + p.collisionOffsetY,
+          width: p.collisionWidth,
+          height: p.collisionHeight,
         };
         if (p.alive && rectsIntersect(handFistBox, planeCollisionBox)) {
           createExplosion(p.x, p.y); // show explosion at plane location
