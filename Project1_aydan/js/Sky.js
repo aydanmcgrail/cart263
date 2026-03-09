@@ -121,44 +121,43 @@ window.onload = function () {
     }
 
     // DEBUG: Draw collision boxes
-    drawCollisionDebug(sky);
+    //drawCollisionDebug(sky);
 
     if (sky.hand) sky.hand.update();
 
     requestAnimationFrame(updateSky);
   }
 
-  function drawCollisionDebug(sky) {
+  /*function drawCollisionDebug(sky) {
     // Remove old debug boxes
     document
       .querySelectorAll("[data-debug-box]")
       .forEach((box) => box.remove());
 
     // Draw fork collision boxes (red)
-    sky.forks.forEach((f) => {
+    sky.forks.forEach((fork) => {
       const box = document.createElement("div");
       box.setAttribute("data-debug-box", "fork");
       box.style.position = "absolute";
-      box.style.left = f.x + f.collisionOffsetX + "px";
-      box.style.top = f.y + f.collisionOffsetY + "px";
-      box.style.width = f.collisionWidth + "px";
-      box.style.height = f.collisionHeight + "px";
+      box.style.left = fork.x + fork.collisionOffsetX + "px";
+      box.style.top = fork.y + fork.collisionOffsetY + "px";
+      box.style.width = fork.collisionWidth + "px";
+      box.style.height = fork.collisionHeight + "px";
       box.style.border = "2px solid red";
       box.style.backgroundColor = "rgba(255, 0, 0, 0.2)";
       box.style.pointerEvents = "none";
       document.body.appendChild(box);
     });
 
-    // Draw plane collision boxes (blue for coin, purple for fork)
-    sky.planes.forEach((p) => {
+    sky.planes.forEach((plane) => {
       // Coin collision box (blue)
       const coinBox = document.createElement("div");
       coinBox.setAttribute("data-debug-box", "plane-coin");
       coinBox.style.position = "absolute";
-      coinBox.style.left = p.x + p.collisionOffsetX + "px";
-      coinBox.style.top = p.y + p.collisionOffsetY + "px";
-      coinBox.style.width = p.collisionWidth + "px";
-      coinBox.style.height = p.collisionHeight + "px";
+      coinBox.style.left = plane.x + plane.collisionOffsetX + "px";
+      coinBox.style.top = plane.y + plane.collisionOffsetY + "px";
+      coinBox.style.width = plane.collisionWidth + "px";
+      coinBox.style.height = plane.collisionHeight + "px";
       coinBox.style.border = "2px solid blue";
       coinBox.style.backgroundColor = "rgba(0, 0, 255, 0.2)";
       coinBox.style.pointerEvents = "none";
@@ -168,10 +167,10 @@ window.onload = function () {
       const forkBox = document.createElement("div");
       forkBox.setAttribute("data-debug-box", "plane-fork");
       forkBox.style.position = "absolute";
-      forkBox.style.left = p.x + p.forkCollisionOffsetX + "px";
-      forkBox.style.top = p.y + p.forkCollisionOffsetY + "px";
-      forkBox.style.width = p.forkCollisionWidth + "px";
-      forkBox.style.height = p.forkCollisionHeight + "px";
+      forkBox.style.left = plane.x + plane.forkCollisionOffsetX + "px";
+      forkBox.style.top = plane.y + plane.forkCollisionOffsetY + "px";
+      forkBox.style.width = plane.forkCollisionWidth + "px";
+      forkBox.style.height = plane.forkCollisionHeight + "px";
       forkBox.style.border = "2px solid purple";
       forkBox.style.backgroundColor = "rgba(128, 0, 128, 0.2)";
       forkBox.style.pointerEvents = "none";
@@ -192,7 +191,7 @@ window.onload = function () {
       handBox.style.pointerEvents = "none";
       document.body.appendChild(handBox);
     }
-  }
+  }*/
 
   // hand sits at the top and follows the mouse
   sky.hand = new Hand(500, 500); // width/height can be tweaked to match image size
@@ -238,12 +237,12 @@ window.onload = function () {
   createForks();
 
   function createCoin(startX, startY, vy) {
-    const coin = new Coin(startX, startY, 60, 60, vy);
+    const coin = new Coin(startX, startY, 60, 60, vy);//x,y,width,height,speed
     sky.coins.push(coin);
     document.body.appendChild(coin.coinBody);
   }
 
-  // jump on key press
+  // jump on key press – info overlay key is handled by infos.js
   window.addEventListener("keydown", function (e) {
     //set up to allow got "0" to jump
     if (e.code === "ArrowDown") {
