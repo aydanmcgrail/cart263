@@ -6,7 +6,7 @@ class InfoOverlay {
 
     this.img = document.createElement("img");
     this.img.id = "infoOverlay";
-    this.img.src = "Project1_aydan/images/infos1.png";
+    this.img.src = "images/infos1.png";
 
     // most layout & visibility work is handled by CSS (#infoOverlay rules)
     document.body.appendChild(this.img);
