@@ -60,10 +60,10 @@ class Hand {
   //briefly show the closed hand image on click
   close() {
     this.handBody.style.backgroundImage =
-      "url('Project1_aydan/images/mainClosed.png')";
+      "url('images/mainClosed.png')";
     setTimeout(() => {
       this.handBody.style.backgroundImage =
-        "url('Project1_aydan/images/main.png')";
+        "url('images/main.png')";
     }, 200); // show closed for 200ms
   }
 
@@ -72,7 +72,7 @@ class Hand {
     this.handBody.style.width = this.width + "px";
     this.handBody.style.height = this.height + "px";
     this.handBody.style.backgroundImage =
-      "url('Project1_aydan/images/main.png')";
+      "url('images/main.png')";
     this.handBody.style.position = "absolute";
     this.update();
   }
