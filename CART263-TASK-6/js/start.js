@@ -138,6 +138,8 @@ function go_all_stuff() {
         dataArray = new Uint8Array(analyser.frequencyBinCount);
 
         source.connect(analyser);
+
+        console.log("Microphone initialized successfully!");
       })
       .catch(function (err) {
         console.error("Mic error:", err);
@@ -153,6 +155,11 @@ function go_all_stuff() {
   );
 
   function getVolume() {
+    // Guard: return 0 if analyser hasn't been initialized yet
+    if (!analyser) {
+      return 0;
+    }
+
     analyser.getByteFrequencyData(dataArray);
 
     let sum = 0;

@@ -17,20 +17,20 @@ class RectangularObj {
   display() {
     // Save the context state
     this.context.save();
-    
+
     // Translate to the center of the rectangle
     this.context.translate(this.x + this.width / 2, this.y + this.height / 2);
-    
+
     // Rotate
     this.context.rotate(this.rotation);
-    
+
     // Draw the rectangle centered at the origin
     this.context.fillStyle = this.fill_color; // change the color we are using
     this.context.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
     this.context.strokeStyle = this.stroke_color; // change the color we are using
     this.context.lineWidth = 2; //change stroke
     this.context.strokeRect(-this.width / 2, -this.height / 2, this.width, this.height);
-    
+
     // Restore the context state
     this.context.restore();
   }
@@ -39,21 +39,9 @@ class RectangularObj {
     const threshold = 40;
 
     if (volume > threshold) {
-      // ROTATE based on volume
+      // ROTATE based on volume when sound is strong
       this.rotation += volume * 0.02; // Increases rotation speed with volume
-      
-      // MOVE based on volume
-      this.y -= volume * 0.1;
-
-      // RANDOM COLOR
-      this.fill = `rgb(
-      ${Math.random() * 255},
-      ${Math.random() * 255},
-      ${Math.random() * 255}
-    )`;
-    } else {
-      // gravity fallback
-      this.y += 2;
     }
+    // Stop rotating when volume is low - rotation property stays the same
   }
 }
