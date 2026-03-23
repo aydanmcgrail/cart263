@@ -12,6 +12,7 @@ class RectangularObj {
     this.endAngle = Math.PI * 2; //full rotation
     this.context = context;
     this.rotation = 0; // New property for rotation
+    this.isMoving = false; // Track if currently moving
   }
 
   display() {
@@ -26,10 +27,20 @@ class RectangularObj {
 
     // Draw the rectangle centered at the origin
     this.context.fillStyle = this.fill_color; // change the color we are using
-    this.context.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+    this.context.fillRect(
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height,
+    );
     this.context.strokeStyle = this.stroke_color; // change the color we are using
     this.context.lineWidth = 2; //change stroke
-    this.context.strokeRect(-this.width / 2, -this.height / 2, this.width, this.height);
+    this.context.strokeRect(
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height,
+    );
 
     // Restore the context state
     this.context.restore();
@@ -39,9 +50,21 @@ class RectangularObj {
     const threshold = 40;
 
     if (volume > threshold) {
+      if (!this.isMoving) {
+        // Change color when starting to move
+        this.fill_color = this.getRandomColor();
+        this.stroke_color = this.getRandomColor();
+        this.isMoving = true;
+      }
       // ROTATE based on volume when sound is strong
-      this.rotation += volume * 0.02; // Increases rotation speed with volume
+      this.rotation += volume * 0.002; // Increases rotation speed with volume
+    } else {
+      this.isMoving = false;
     }
     // Stop rotating when volume is low - rotation property stays the same
+  }
+
+  getRandomColor() {
+    return "#" + Math.floor(Math.random() * 16777215).toString(16);
   }
 }

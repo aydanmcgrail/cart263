@@ -74,17 +74,26 @@ class DrawingBoard {
 
   /* method to add animate objects on canvas */
   animate(volume) {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
     for (let i = 0; i < this.objectsOnCanvas.length; i++) {
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.objectsOnCanvas[i].update(volume);
       this.objectsOnCanvas[i].display();
     }
   }
 
-  run(videoElement) {
+  run(videoElement, mx, my) {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
     for (let i = 0; i < this.objectsOnCanvas.length; i++) {
-      this.objectsOnCanvas[i].update(videoElement);
-      this.objectsOnCanvas[i].display();
+      let obj = this.objectsOnCanvas[i];
+
+      if (obj.updatePositionRect) {
+        obj.updatePositionRect(mx, my);
+      }
+
+      obj.update(videoElement);
+      obj.display();
     }
   }
 }

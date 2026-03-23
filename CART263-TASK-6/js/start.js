@@ -83,10 +83,13 @@ function go_all_stuff() {
 
     smoothVolume = smoothVolume * 0.9 + volume * 0.1;
 
-    console.log("Volume:", volume.toFixed(2), "| Smooth Volume:", smoothVolume.toFixed(2));
-
     drawingBoardB.animate(smoothVolume);
     drawingBoardC.animate(smoothVolume);
+    drawingBoardD.run(
+      videoEl,
+      drawingBoardD.mouseOffsetX,
+      drawingBoardD.mouseOffsetY,
+    );
 
     window.requestAnimationFrame(animationLoop);
   }
